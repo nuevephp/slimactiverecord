@@ -39,7 +39,7 @@ $app->post('/task/new/', function () use ($app) {
 
 $app->get('/task/:id/edit', function ($id) use ($app) {
     $data['task'] = Task::find($id);
-    $app->render('task/edit.php', $data);
+    $app->render('task/edit.html', $data);
 })->name('task_edit');
 
 $app->post('/task/:id/edit', function ($id) use ($app) {
