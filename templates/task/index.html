@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Tasks</h1>
 <ul>
 	<?php foreach ($tasks as $task): ?>
@@ -8,3 +11,4 @@
 <form action="<?php echo Slim::getInstance()->urlFor('task_new'); ?>" method="post">
 	<input type="submit" value="Add Task" />
 </form>
+{% endblock %}
