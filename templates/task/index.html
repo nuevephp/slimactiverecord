@@ -3,12 +3,12 @@
 {% block content %}
 <h1>Tasks</h1>
 <ul>
-	<?php foreach ($tasks as $task): ?>
-	<li><a href="<?php echo Slim::getInstance()->urlFor('task_edit', array('id' => $task->id)); ?>"><?php echo $task->name; ?></a> <a href="<?php echo Slim::getInstance()->urlFor('task_delete', array('id' => $task->id)); ?>">Delete</a></li>
-	<?php endforeach; ?>
+	{% for task in tasks %}
+	<li><a href="{{ url('task_edit', {'id': task.id}) }}">{{ task.name }}</a> <a href="{{ url('task_delete', {'id': task.id}) }}">Delete</a></li>
+	{% endfor %}
 </ul>
 
-<form action="<?php echo Slim::getInstance()->urlFor('task_new'); ?>" method="post">
+<form action="{{ url('task_new') }}" method="post">
 	<input type="submit" value="Add Task" />
 </form>
 {% endblock %}

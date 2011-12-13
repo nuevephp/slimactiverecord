@@ -14,12 +14,18 @@ ActiveRecord\Config::initialize(function($cfg)
     ));
 });
 
+$twig = new TwigView();
+
 $app = new Slim(array(
-    'view' => 'TwigView'
+    'view' => $twig,
+    'templates.path' => dirname(__FILE__) . '/templates'
 ));
 
 // Configure Twig
-TwigView::$twigDirectory = dirname(__FILE__) . '/vendor/Twig';
+$twig::$twigDirectory = dirname(__FILE__) . '/vendor/Twig';
+
+$env = $twig->getEnvironment();
+$env->addFunction('url', new Twig_Function_Function('Slim::getInstance()->urlFor'));
 
 $app->get('/', function () use ($app) {
     $data['tasks'] = Task::find('all');
