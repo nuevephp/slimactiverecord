@@ -208,6 +208,7 @@ class Slim {
             if ( $sessionHandler instanceof Slim_Session_Handler ) {
                 $sessionHandler->register($this);
             }
+            session_cache_limiter(false); 
             session_start();
         }
 
@@ -218,13 +219,6 @@ class Slim {
         if ( !isset(self::$apps['default']) ) {
             $this->setName('default');
         }
-
-        $templatesPath = $this->config('templates.path');
-        //Legacy support
-        if ( is_null($templatesPath) ) {
-            $templatesPath = $this->config('templates_dir');
-        }
-        $this->view->setTemplatesDirectory($templatesPath);
 
         //Set global Error handler after Slim app instantiated
         set_error_handler(array('Slim', 'handleErrors'));
@@ -581,6 +575,7 @@ class Slim {
                 $this->view = new $viewClass();
             }
             $this->view->appendData($existingData);
+            $this->view->setTemplatesDirectory($this->config('templates.path'));
         }
         return $this->view;
     }

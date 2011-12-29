@@ -4,11 +4,11 @@
 <h1>Tasks</h1>
 <ul>
 	{% for task in tasks %}
-	<li><a href="{{ url('task_edit', {'id': task.id}) }}">{{ task.name }}</a> <a href="{{ url('task_delete', {'id': task.id}) }}">Delete</a></li>
+	<li><a href="{{ urlFor('task_edit', {'id': task.id}) }}">{{ task.name }}</a> <a href="{{ urlFor('task_delete', {'id': task.id}) }}">Delete</a></li>
 	{% endfor %}
 </ul>
 
-<form action="{{ url('task_new') }}" method="post">
+<form action="{{ urlFor('task_new') }}" method="post">
 	<input type="submit" value="Add Task" />
 </form>
 {% endblock %}

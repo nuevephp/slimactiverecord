@@ -34,7 +34,7 @@ set_include_path(dirname(__FILE__) . '/../' . PATH_SEPARATOR . get_include_path(
 
 require_once 'Slim/View.php';
 
-class ViewTest extends PHPUnit_Extensions_OutputTestCase {
+class ViewTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
         $this->view = new Slim_View();
@@ -129,20 +129,6 @@ class ViewTest extends PHPUnit_Extensions_OutputTestCase {
     public function testTemplatesDirectoryWithTrailingSlash() {
         $this->view->setTemplatesDirectory(dirname(__FILE__) . '/templates/');
         $this->assertEquals(dirname(__FILE__) . '/templates', $this->view->getTemplatesDirectory());
-    }
-
-    /**
-     * Test View throws Exception if templates directory does not exist
-     *
-     * Pre-conditions:
-     * View templates directory is set to a non-existent directory
-     *
-     * Post-conditions:
-     * A RuntimeException is thrown
-     */
-    public function testExceptionForInvalidTemplatesDirectory() {
-        $this->setExpectedException('RuntimeException');
-        $this->view->setTemplatesDirectory('./foo');
     }
 
     /**
