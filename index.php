@@ -17,10 +17,12 @@ ActiveRecord\Config::initialize(function($cfg)
 // Configure Twig
 TwigView::$twigDirectory = dirname(__FILE__) . '/vendor/Twig';
 
+// Adding in extension
 TwigView::$twigExtensions = array(
     'Extension_Twig_Slim'
 );
 
+// Initialize Slim with TwigView
 $app = new Slim(array(
     'view' => 'TwigView'
 ));
