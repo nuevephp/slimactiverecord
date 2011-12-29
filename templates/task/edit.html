@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Task "{{ task.name }}"</h1>
+
+<form action="{{ urlFor('task_edit_post', {'id':  task.id}) }}" method="post">
+	<p>
+		<label for="name">Name</label>
+		<input type="text" name="name" value="{{ task.name }}" />
+	</p>
+	<p>
+		<label for="done">Done</label>
+		<input type="checkbox" name="done" value="1" {% if task.done == 1 %}checked=checked{% endif %} />
+	</p>
+	<input type="submit" value="Save Task" />
+</form>
+{% endblock %}

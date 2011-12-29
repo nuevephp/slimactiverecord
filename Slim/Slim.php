@@ -208,6 +208,7 @@ class Slim {
             if ( $sessionHandler instanceof Slim_Session_Handler ) {
                 $sessionHandler->register($this);
             }
+            session_cache_limiter(false); 
             session_start();
         }
 
@@ -574,6 +575,7 @@ class Slim {
                 $this->view = new $viewClass();
             }
             $this->view->appendData($existingData);
+            $this->view->setTemplatesDirectory($this->config('templates.path'));
         }
         return $this->view;
     }
@@ -594,12 +596,6 @@ class Slim {
      * @return  void
      */
     public function render( $template, $data = array(), $status = null ) {
-        $templatesPath = $this->config('templates.path');
-        //Legacy support
-        if ( is_null($templatesPath) ) {
-            $templatesPath = $this->config('templates_dir');
-        }
-        $this->view->setTemplatesDirectory($templatesPath);
         if ( !is_null($status) ) {
             $this->response->status($status);
         }

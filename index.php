@@ -2,6 +2,7 @@
 
 require 'Slim/Slim.php';
 require 'vendor/ActiveRecord.php';
+require 'Views/TwigView.php';
 
 // initialize ActiveRecord
 // change the connection settings to whatever is appropriate for your mysql server 
@@ -9,15 +10,25 @@ ActiveRecord\Config::initialize(function($cfg)
 {
     $cfg->set_model_directory('models');
     $cfg->set_connections(array(
-        'development' => 'mysql://test:test@127.0.0.1/test'
+        'development' => 'mysql://serverside:password@127.0.0.1/slimactiverecord'
     ));
 });
 
-$app = new Slim();
+// Configure Twig
+TwigView::$twigDirectory = dirname(__FILE__) . '/vendor/Twig';
+
+TwigView::$twigExtensions = array(
+    'Extension_Twig_Slim'
+);
+
+$app = new Slim(array(
+    'view' => 'TwigView'
+));
+
 
 $app->get('/', function () use ($app) {
     $data['tasks'] = Task::find('all');
-    $app->render('task/index.php', $data);
+    $app->render('task/index.html', $data);
 })->name('tasks');
 
 $app->post('/task/new/', function () use ($app) {
@@ -33,7 +44,7 @@ $app->post('/task/new/', function () use ($app) {
 
 $app->get('/task/:id/edit', function ($id) use ($app) {
     $data['task'] = Task::find($id);
-    $app->render('task/edit.php', $data);
+    $app->render('task/edit.html', $data);
 })->name('task_edit');
 
 $app->post('/task/:id/edit', function ($id) use ($app) {
